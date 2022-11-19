@@ -1,15 +1,16 @@
 const express = require('express')
-const mongoose = require('mongoose')
-const Restaurant = require('./models/restaurant')
+// const mongoose = require('mongoose')
+// const Restaurant = require('./models/restaurant')
 const app = express()
 const port = 3000
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override') 
 // 引用路由器
 const routes = require('./routes')
-
 const exphbs = require('express-handlebars')
 const restaurantList = require('./restaurant.json')
+
+require('./config/mongoose')
 
 //僅在非正式環境時, 使用 dotenv
 if (process.env.NODE_ENV !== 'production') {
@@ -17,7 +18,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.use(bodyParser.urlencoded({ extended: true }))
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }) // 設定連線到 mongoDB
 
 // 設定每一筆請求都會透過 methodOverride 進行前置處理
 app.use(methodOverride('_method'))
@@ -25,18 +25,20 @@ app.use(methodOverride('_method'))
 // 將 request 導入路由器
 app.use(routes)
 
-// 取得資料庫連線狀態
-const db = mongoose.connection
+// mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }) // 設定連線到 mongoDB
 
-// db發生錯誤時，發出提醒
-db.on('error', () => {
-  console.log('mongodb error!')
-})
+// // 取得資料庫連線狀態
+// const db = mongoose.connection
 
-// db成功時，會跑出提示，once：這件事只會做一次
-db.once('open', () => {
-  console.log('mongodb connected!')
-})
+// // db發生錯誤時，發出提醒
+// db.on('error', () => {
+//   console.log('mongodb error!')
+// })
+
+// // db成功時，會跑出提示，once：這件事只會做一次
+// db.once('open', () => {
+//   console.log('mongodb connected!')
+// })
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
