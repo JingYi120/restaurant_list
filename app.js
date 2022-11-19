@@ -4,6 +4,7 @@ const Restaurant = require('./models/restaurant')
 const app = express()
 const port = 3000
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override') 
 
 const exphbs = require('express-handlebars')
 const restaurantList = require('./restaurant.json')
@@ -15,6 +16,9 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use(bodyParser.urlencoded({ extended: true }))
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }) // 設定連線到 mongoDB
+
+// 設定每一筆請求都會透過 methodOverride 進行前置處理
+app.use(methodOverride('_method'))
 
 // 取得資料庫連線狀態
 const db = mongoose.connection
@@ -74,7 +78,7 @@ app.get('/restaurants/:restaurant_id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
-app.post('/restaurants/:restaurant_id/edit', (req, res) => {
+app.put('/restaurants/:restaurant_id', (req, res) => {
   const id = req.params.restaurant_id
   const body = req.body
   // 查詢資料
@@ -97,7 +101,7 @@ app.post('/restaurants/:restaurant_id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
-app.post('/restaurants/:restaurant_id/delete', (req, res) => {
+app.delete('/restaurants/:restaurant_id', (req, res) => {
   const id = req.params.restaurant_id
   return Restaurant.findById(id)
     .then(restaurant => restaurant.remove())
