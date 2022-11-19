@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const Restaurant = require('./models/restaurant')
 const app = express()
 const port = 3000
+const bodyParser = require('body-parser')
 
 const exphbs = require('express-handlebars')
 const restaurantList = require('./restaurant.json')
@@ -12,6 +13,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
+app.use(bodyParser.urlencoded({ extended: true }))
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }) // 設定連線到 mongoDB
 
 // 取得資料庫連線狀態
@@ -42,12 +44,12 @@ app.get ('/', (req, res) => {
 
 // 新增餐廳頁面
 app.get("/restaurants/new", (req, res) => {
-  res.render("new")
+ return res.render('new')
 })
 
 // 新增餐廳
 app.post("/restaurants", (req, res) => {
-  Restaurant.create(req.body)
+  return Restaurant.create(req.body)
     .then(() => res.redirect("/"))
     .catch(err => console.log(err))
 })
