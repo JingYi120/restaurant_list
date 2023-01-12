@@ -1,13 +1,12 @@
 const express = require('express')
-// const mongoose = require('mongoose')
-// const Restaurant = require('./models/restaurant')
 const app = express()
 const port = 3000
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override') 
-// 引用路由器
-const routes = require('./routes')
 const exphbs = require('express-handlebars')
+const session = require('express-session')
+
+const routes = require('./routes')
 const restaurantList = require('./restaurant.json')
 
 require('./config/mongoose')
@@ -27,6 +26,12 @@ app.use(routes)
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+}))
 
 app.use(express.static('public'))
 
