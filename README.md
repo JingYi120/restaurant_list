@@ -1,18 +1,16 @@
 ## 介紹
-***
 建立屬於自己的餐廳清單
 
 ## 功能
-***
-1. 查看餐廳詳細資訊，例如：電話、地址、連結Google Map
-2. 搜尋特定餐廳
-3. 瀏覽所有餐廳
-4. 刪除特定餐廳
-5. 新增喜愛的餐廳
-6. 編輯餐廳資訊
+- 可使用email註冊或Facebook登入會員
+- 查看餐廳詳細資訊，例如：電話、地址、連結Google Map
+- 搜尋特定餐廳
+- 瀏覽所有餐廳
+- 刪除特定餐廳
+- 新增喜愛的餐廳
+- 編輯餐廳資訊 
 
 ## 開始使用
-***
 1. 請先確認有安裝 node.js 與 npm
 2. 將專案 clone 到本地
 3. 在本地開啟之後，透過終端機進入資料夾，輸入：
@@ -37,3 +35,11 @@
 - Express-Handlebars 3.0.0
 - Bootstrap 5.1.3
 - Font-awesome
+- Bcryptjs 2.4.3
+- Connect-flash 0.1.1
+- Express-session 1.17.1
+- Method-override 3.0.0
+- Mongoose 5.9.7
+- Passport 0.4.1
+- Passport-facebook 3.0.0
+- Passport-local 1.0.0
