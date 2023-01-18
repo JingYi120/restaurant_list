@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override') 
 const exphbs = require('express-handlebars')
 const session = require('express-session')
+const flash = require('connect-flash')
 const usePassport = require('./config/passport')
 
 const routes = require('./routes')
